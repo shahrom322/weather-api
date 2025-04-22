@@ -34,6 +34,12 @@ class PostgresConfig(BaseConfig):
         )
 
 
+class OpenWeatherConfig(BaseConfig):
+    openweather_api_key: str
+    openweather_lang: str = "en"
+    openweather_units: str = "metric"
+
+
 class AppConfig(BaseConfig):
     app_name: str = "weather_api"
 
@@ -41,3 +47,4 @@ class AppConfig(BaseConfig):
 class Config(BaseConfig):
     postgres: PostgresConfig = Field(default_factory=PostgresConfig)
     application: AppConfig = Field(default_factory=AppConfig)
+    openweather: OpenWeatherConfig = Field(default_factory=OpenWeatherConfig)

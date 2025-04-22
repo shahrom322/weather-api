@@ -1,3 +1,5 @@
+from typing import Self
+
 from sqlalchemy import Index
 from sqlalchemy.orm import Mapped, mapped_column
 from datetime import date
@@ -20,6 +22,15 @@ class WeatherModel(Base):
     date: Mapped[date]
     temperature: Mapped[CelsiusType]
     humidity: Mapped[HumidityType]
+
+    @classmethod
+    def from_entity(cls, entity: WeatherEntity) -> Self:
+        return WeatherModel(
+            city=entity.city,
+            date=entity.date,
+            temperature=entity.temperature,
+            humidity=entity.humidity,
+        )
 
     def to_entity(self) -> WeatherEntity:
         return WeatherEntity(
