@@ -36,3 +36,14 @@ class ListWeatherOutputModel(BaseModel):
     data: Annotated[
         list[WeatherOutputModel], Field(description="Список данных о погоде")
     ]
+
+
+class StatsOutputModel(BaseModel):
+    avg_temperature: Annotated[
+        CelsiusType,
+        Field(..., examples=[3.45], description="Средняя температура за период"),
+    ]
+    avg_humidity: Annotated[
+        HumidityType,
+        Field(..., examples=[70], description="Средняя влажность за период"),
+    ]
