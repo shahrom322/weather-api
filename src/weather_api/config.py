@@ -1,5 +1,6 @@
 from pathlib import Path
 
+from pydantic import Field
 from pydantic_settings import BaseSettings
 from sqlalchemy.engine.interfaces import IsolationLevel
 
@@ -10,6 +11,7 @@ class BaseConfig(BaseSettings):
 
     class Config:
         env_file = PROJECT_DIR / ".env"
+        extra = "ignore"
 
 
 class PostgresConfig(BaseConfig):
@@ -30,3 +32,12 @@ class PostgresConfig(BaseConfig):
             f"postgresql+asyncpg://{self.postgres_user}:{self.postgres_password}@"
             f"{self.postgres_host}:{self.postgres_port}/{self.postgres_db}"
         )
+
+
+class AppConfig(BaseConfig):
+    app_name: str = "weather_api"
+
+
+class Config(BaseConfig):
+    postgres: PostgresConfig = Field(default_factory=PostgresConfig)
+    application: AppConfig = Field(default_factory=AppConfig)
