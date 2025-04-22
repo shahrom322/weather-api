@@ -1,10 +1,10 @@
-from datetime import datetime
 from enum import Enum
 
-from sqlalchemy import MetaData
+from sqlalchemy import MetaData, SmallInteger, Numeric
 from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy_utc import UtcDateTime
+
+from weather_api.domain.types import CelsiusType, HumidityType
 
 
 class Base(DeclarativeBase):
@@ -20,6 +20,7 @@ class Base(DeclarativeBase):
     )
 
     type_annotation_map = {
-        datetime: UtcDateTime,
         Enum: postgresql.ENUM,
+        CelsiusType: Numeric(precision=5, scale=2),
+        HumidityType: SmallInteger,
     }
