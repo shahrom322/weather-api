@@ -1,6 +1,6 @@
 [project]
 name = "weather-api"
-version = "0.1.0"
+version = "0.1.1"
 description = ""
 authors = [
     { name = "Шахром Касимов", email = "kasimov.shahrom05@gmail.com" }
