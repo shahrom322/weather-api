@@ -1,4 +1,3 @@
-import dishka
 from dishka import make_async_container
 from dishka.integrations.fastapi import setup_dishka
 from fastapi import FastAPI

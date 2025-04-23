@@ -1,4 +1,5 @@
 from abc import abstractmethod
+from datetime import date
 from typing import Protocol
 
 from weather_api.domain.dto import GetWeatherListDTO
@@ -10,6 +11,9 @@ class IWeatherReader(Protocol):
 
     @abstractmethod
     async def get_weather_list(self, dto: GetWeatherListDTO) -> list[WeatherEntity]: ...
+
+    @abstractmethod
+    async def is_weather_data_exists(self, target_day: date) -> bool: ...
 
 
 class IWeatherWriter(Protocol):

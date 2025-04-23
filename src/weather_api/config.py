@@ -40,11 +40,26 @@ class OpenWeatherConfig(BaseConfig):
     openweather_units: str = "metric"
 
 
+class RedisConfig(BaseConfig):
+    redis_host: str
+    redis_port: int
+    redis_database: int
+
+
 class AppConfig(BaseConfig):
     app_name: str = "weather_api"
+    log_config_file: Path = (
+        PROJECT_DIR
+        / "src"
+        / "weather_api"
+        / "infrastructure"
+        / "logging"
+        / "log_config.json"
+    )
 
 
 class Config(BaseConfig):
     postgres: PostgresConfig = Field(default_factory=PostgresConfig)
     application: AppConfig = Field(default_factory=AppConfig)
     openweather: OpenWeatherConfig = Field(default_factory=OpenWeatherConfig)
+    redis: RedisConfig = Field(default_factory=RedisConfig)

@@ -14,6 +14,9 @@ from weather_api.application.use_cases.get_stats_use_case import GetStatsUseCase
 from weather_api.application.use_cases.get_weather_list_use_case import (
     GetWeatherListUseCase,
 )
+from weather_api.application.use_cases.is_weather_data_exists_use_case import (
+    IsWeatherDataExistsUseCase,
+)
 from weather_api.config import Config, OpenWeatherConfig
 from weather_api.infrastructure.clients.open_weather_client import OpenWeatherClient
 from weather_api.infrastructure.database.gateway.reader import WeatherDataReader
@@ -57,3 +60,4 @@ class AppProvider(Provider):
     get_weather_list_uc = provide(GetWeatherListUseCase, scope=Scope.REQUEST)
     get_stats_uc = provide(GetStatsUseCase, scope=Scope.REQUEST)
     fetch_weather_uc = provide(FetchWeatherUseCase, scope=Scope.REQUEST)
+    is_weather_data_exists_uc = provide(IsWeatherDataExistsUseCase, scope=Scope.REQUEST)

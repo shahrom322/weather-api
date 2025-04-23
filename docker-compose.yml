@@ -1,0 +1,48 @@
+version: "3.8"
+
+services:
+  weather_db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB:
+      POSTGRES_USER:
+      POSTGRES_PASSWORD:
+    volumes:
+      - weather_postgres-data:/var/lib/postgresql/data
+
+  weather_redis:
+    image: redis:7
+    restart: always
+
+  weather_web_service:
+    build:
+      dockerfile: ./Dockerfile
+    restart: unless-stopped
+    ports:
+      - 8000:8000
+    environment: &env
+      POSTGRES_HOST:
+      POSTGRES_DB:
+      POSTGRES_USER:
+      POSTGRES_PASSWORD:
+      POSTGRES_PORT:
+      OPENWEATHER_API_KEY:
+      REDIS_HOST:
+      REDIS_PORT:
+      REDIS_DATABASE:
+    depends_on:
+      - weather_db
+
+  weather_rq_worker:
+    build:
+      dockerfile: ./Dockerfile
+    restart: unless-stopped
+    command: rq_worker
+    environment: *env
+    depends_on:
+      - weather_db
+      - weather_redis
+
+volumes:
+  weather_postgres-data:
