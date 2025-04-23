@@ -1,4 +1,6 @@
-from sqlalchemy import select
+from datetime import date
+
+from sqlalchemy import select, exists
 
 from weather_api.application.interfaces import IWeatherReader
 from weather_api.domain.dto import GetWeatherListDTO
@@ -17,3 +19,7 @@ class WeatherDataReader(BaseGateway, IWeatherReader):
 
         result = (await self._session.scalars(stmt)).all()
         return [model.to_entity() for model in result]
+
+    async def is_weather_data_exists(self, target_day: date) -> bool:
+        stmt = select(exists().where(target_day == WeatherModel.date))
+        return await self._session.scalar(stmt)

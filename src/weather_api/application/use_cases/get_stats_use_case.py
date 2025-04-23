@@ -29,7 +29,7 @@ class GetStatsUseCase:
         total_temp = sum(record.temperature for record in data)
         total_hum = sum(record.humidity for record in data)
 
-        avg_temp = CelsiusType(Decimal(total_temp / count))
+        avg_temp = CelsiusType(Decimal(round(total_temp / count, 2)))
         avg_humidity = HumidityType(int(total_hum / count))
 
         return StatsDTO(avg_temperature=avg_temp, avg_humidity=avg_humidity)
